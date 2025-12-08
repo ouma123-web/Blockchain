@@ -1,0 +1,23 @@
+{
+  "name": "apxos-settlement",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "hardhat compile",
+    "test": "hardhat test --show-stack-traces --network hardhat",
+    "deploy:token": "hardhat run scripts/00-deploy-apxos-token.ts --network sepolia",
+    "deploy:usdc": "hardhat run scripts/00-deploy-mock-usdc.ts --network sepolia",
+    "deploy:settlement": "hardhat run scripts/01-deploy-settlement.ts --network sepolia",
+    "deploy:roles": "hardhat run scripts/02-set-roles.ts --network sepolia",
+    "gas": "hardhat test --network hardhat --parallel --report-gas"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@openzeppelin/contracts": "^5.0.0",
+    "dotenv": "^16.4.0",
+    "hardhat": "^2.22.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.4.0"
+  }
+}
+
