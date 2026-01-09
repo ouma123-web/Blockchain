@@ -1,0 +1,13 @@
+{
+  "ecosystemId": "0xe4525fce8e696b50d84d2c3d72958264d6e0d2944ab6c0dd9d7291a0b8a3cc4a",
+  "factory": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+  "consumer": "0xB7A5bd0345EF1Cc5E66bf61BdeC17D2461fBd968",
+  "provider": "0xeEBe00Ac0756308ac4AaBfD76c05c4F3088B8883",
+  "marketplace": "0xa16E02E87b7454126E5E10d957A927A7F5B5d2be",
+  "stablecoin": "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
+  "treasury": "0x19bb5d775c45aa3eb378a9d120c56fa9d09da467",
+  "commissionBps": 500,
+  "operator": "0x19bb5d775c45aa3eb378a9d120c56fa9d09da467",
+  "network": "sepolia",
+  "deployedAt": "2026-01-06T10:41:27.804Z"
+}

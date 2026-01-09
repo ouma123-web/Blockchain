@@ -5,10 +5,19 @@
   "scripts": {
     "build": "hardhat compile",
     "test": "hardhat test --show-stack-traces --network hardhat",
+    "test:modular": "hardhat test test/ApxosModular.test.ts --show-stack-traces --network hardhat",
     "deploy:token": "hardhat run scripts/00-deploy-apxos-token.ts --network sepolia",
     "deploy:usdc": "hardhat run scripts/00-deploy-mock-usdc.ts --network sepolia",
     "deploy:settlement": "hardhat run scripts/01-deploy-settlement.ts --network sepolia",
     "deploy:roles": "hardhat run scripts/02-set-roles.ts --network sepolia",
+    "deploy:all": "hardhat run scripts/deploy-all.ts --network sepolia",
+    "deploy:modular": "hardhat run scripts/deploy-modular.ts --network sepolia",
+    "deploy:local": "hardhat run scripts/deploy-modular.ts --network hardhat",
+    "test:interaction": "hardhat run scripts/test-interaction.js --network hardhat",
+    "check:deployment": "node scripts/check-deployment.js",
+    "show:local": "node scripts/show-local-status.js",
+    "verify": "hardhat run scripts/03-verify-contracts.ts --network sepolia",
+    "verify:modular": "hardhat run scripts/verify-modular.ts --network sepolia",
     "gas": "hardhat test --network hardhat --parallel --report-gas"
   },
   "devDependencies": {

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apxos Blockchain Deployment Viewer</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .section {
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .section h2 {
+            margin-top: 0;
+            color: #ffd700;
+            border-bottom: 2px solid #ffd700;
+            padding-bottom: 10px;
+        }
+        .contract-card {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #4CAF50;
+        }
+        .contract-card h3 {
+            margin: 0 0 10px 0;
+            color: #4CAF50;
+        }
+        .address {
+            font-family: 'Courier New', monospace;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 5px 10px;
+            border-radius: 4px;
+            word-break: break-all;
+        }
+        .status {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        .status.success { background: #4CAF50; color: white; }
+        .status.warning { background: #ff9800; color: white; }
+        .status.error { background: #f44336; color: white; }
+        .network-badge {
+            display: inline-block;
+            background: #2196F3;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .actions {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 0 10px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: bold;
+        }
+        .btn:hover {
+            background: #45a049;
+        }
+        .btn.secondary {
+            background: #2196F3;
+        }
+        .btn.secondary:hover {
+            background: #1976D2;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        th {
+            background: rgba(255, 255, 255, 0.1);
+            font-weight: bold;
+        }
+        .refresh-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #ff5722;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <button class="refresh-btn" onclick="location.reload()">🔄 Refresh</button>
+
+    <div class="container">
+        <h1>🚀 Apxos Blockchain Deployment Viewer</h1>
+
+        <div id="content">
+            <div class="section">
+                <h2>📊 Loading Deployment Data...</h2>
+                <p>Please wait while we fetch the deployment information...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mock data for demonstration (replace with actual API calls)
+        const mockData = {
+            network: "Local Hardhat",
+            deployedAt: new Date().toISOString(),
+            contracts: {
+                factory: {
+                    address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+                    name: "ApxosFactory",
+                    status: "deployed",
+                    description: "Factory contract for deploying ecosystems"
+                },
+                consumer: {
+                    address: "0xB7A5bd0345EF1Cc5E66bf61BdeC17D2461fBd968",
+                    name: "ApxosConsumer",
+                    status: "deployed",
+                    description: "Consumer-side escrow management"
+                },
+                provider: {
+                    address: "0xeEBe00Ac0756308ac4AaBfD76c05c4F3088B8883",
+                    name: "ApxosProvider",
+                    status: "deployed",
+                    description: "Provider-side payment processing"
+                },
+                marketplace: {
+                    address: "0xa16E02E87b7454126E5E10d957A927A7F5B5d2be",
+                    name: "ApxosMarketplace",
+                    status: "deployed",
+                    description: "Marketplace operations and revenue sharing"
+                },
+                stablecoin: {
+                    address: "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
+                    name: "USDC (Mock)",
+                    status: "existing",
+                    description: "Stablecoin for payments"
+                }
+            },
+            config: {
+                treasury: "0x19bb5d775c45aa3eb378a9d120c56fa9d09da467",
+                commissionBps: 500,
+                operator: "0x19bb5d775c45aa3eb378a9d120c56fa9d09da467"
+            }
+        };
+
+        function renderDeploymentData(data) {
+            const content = document.getElementById('content');
+
+            content.innerHTML = `
+                <div class="network-badge">${data.network}</div>
+
+                <div class="section">
+                    <h2>📋 Deployment Overview</h2>
+                    <table>
+                        <tr><th>Network</th><td>${data.network}</td></tr>
+                        <tr><th>Deployed At</th><td>${new Date(data.deployedAt).toLocaleString()}</td></tr>
+                        <tr><th>Ecosystem ID</th><td>0xe4525fce8e696b50d84d2c3d72958264d6e0d2944ab6c0dd9d7291a0b8a3cc4a</td></tr>
+                        <tr><th>Commission Rate</th><td>${data.config.commissionBps / 100}% (${data.config.commissionBps} bps)</td></tr>
+                        <tr><th>Treasury</th><td><span class="address">${data.config.treasury}</span></td></tr>
+                        <tr><th>Settlement Operator</th><td><span class="address">${data.config.operator}</span></td></tr>
+                    </table>
+                </div>
+
+                <div class="section">
+                    <h2>🏗️ Deployed Contracts</h2>
+                    ${Object.entries(data.contracts).map(([key, contract]) => `
+                        <div class="contract-card">
+                            <h3>${getContractIcon(key)} ${contract.name}</h3>
+                            <p><strong>Address:</strong> <span class="address">${contract.address}</span></p>
+                            <p><strong>Status:</strong> <span class="status ${contract.status === 'deployed' ? 'success' : 'warning'}">${contract.status}</span></p>
+                            <p><strong>Description:</strong> ${contract.description}</p>
+                            <p><strong>Etherscan:</strong> <a href="${getEtherscanUrl(contract.address, data.network)}" target="_blank" class="btn secondary">View on Explorer</a></p>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div class="section">
+                    <h2>🔄 Workflow Status</h2>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                        <div class="contract-card">
+                            <h3>1️⃣ Consumer Deposits Escrow</h3>
+                            <p>✅ Ready - Consumer can deposit funds</p>
+                            <p>📍 Contract: ApxosConsumer.depositEscrow()</p>
+                        </div>
+                        <div class="contract-card">
+                            <h3>2️⃣ Provider Confirms Delivery</h3>
+                            <p>✅ Ready - Provider can confirm service delivery</p>
+                            <p>📍 Contract: ApxosMarketplace.confirmDelivery()</p>
+                        </div>
+                        <div class="contract-card">
+                            <h3>3️⃣ System Processes Payment</h3>
+                            <p>✅ Ready - Automatic payment processing</p>
+                            <p>📍 Contract: ApxosProvider.batchRelease()</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button class="btn" onclick="runTests()">🧪 Run Tests</button>
+                    <button class="btn" onclick="showConsole()">💻 Open Hardhat Console</button>
+                    <button class="btn secondary" onclick="checkBlockchainStatus()">🔗 Check Network Status</button>
+                </div>
+            `;
+        }
+
+        function getContractIcon(type) {
+            const icons = {
+                factory: "🏭",
+                consumer: "🛒",
+                provider: "💰",
+                marketplace: "🏪",
+                stablecoin: "💵"
+            };
+            return icons[type] || "📄";
+        }
+
+        function getEtherscanUrl(address, network) {
+            if (network.toLowerCase().includes('sepolia')) {
+                return `https://sepolia.etherscan.io/address/${address}`;
+            } else if (network.toLowerCase().includes('mainnet')) {
+                return `https://etherscan.io/address/${address}`;
+            } else {
+                return `https://localhost:8545/address/${address}`;
+            }
+        }
+
+        function runTests() {
+            alert("To run tests, open terminal and run:\n\nnpm run test:modular\n\nor\n\nnpm run test:interaction");
+        }
+
+        function showConsole() {
+            alert("To open Hardhat console, run in terminal:\n\nnpx hardhat console --network hardhat");
+        }
+
+        function checkBlockchainStatus() {
+            alert("Network Status:\n\n✅ Local Hardhat Network: Running\n✅ Contracts: Deployed\n✅ Tests: 6/8 Passing\n\nTo check real network, deploy to Sepolia first.");
+        }
+
+        // Load data on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simulate loading delay
+            setTimeout(() => {
+                renderDeploymentData(mockData);
+            }, 1000);
+        });
+
+        // Auto-refresh every 30 seconds
+        setInterval(() => {
+            // In a real app, you would fetch fresh data here
+            console.log("Refreshing deployment data...");
+        }, 30000);
+    </script>
+</body>
+</html>

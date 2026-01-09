@@ -5,9 +5,22 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 
-/// @title ApxosSettlement
-/// @notice Escrow + batch settlement contract for Apxos payments
-contract ApxosSettlement is ReentrancyGuard, AccessControl {
+/**
+ * @title ApxosSettlement (LEGACY)
+ * @notice DEPRECATED: This contract has been refactored into a modular architecture
+ *
+ * NEW ARCHITECTURE (3 contracts):
+ * - ApxosConsumer: Consumer-side escrow management
+ * - ApxosProvider: Provider-side payment processing
+ * - ApxosMarketplace: Marketplace operations and revenue sharing
+ * - ApxosFactory: Deployment orchestration
+ *
+ * Migration guide: See MODULAR_README.md
+ *
+ * @dev This contract is kept for historical reference and potential rollback.
+ * DO NOT USE in new deployments. Use the modular contracts instead.
+ */
+contract ApxosSettlementLegacy is ReentrancyGuard, AccessControl {
     bytes32 public constant SETTLEMENT_ROLE = keccak256("SETTLEMENT_ROLE");
     uint256 public constant MAX_BATCH_SIZE = 50;
 
@@ -212,4 +225,3 @@ contract ApxosSettlement is ReentrancyGuard, AccessControl {
         emit DisputeCleared(escrowId, msg.sender);
     }
 }
-

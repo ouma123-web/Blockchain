@@ -1,0 +1,9 @@
+{
+  "consumer": "0xaff9DfCA7850f6eE517aFBB6A54e1F8Ca64Fc027",
+  "marketplace": "0xfcba1d48958f684F2B1Df1aEe2a7274b39db163D",
+  "stablecoin": "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
+  "treasury": "0x19bb5d775c45aa3eb378a9d120c56fa9d09da467",
+  "commissionBps": 500,
+  "network": "sepolia",
+  "deployedAt": "2026-01-09T14:42:11.436Z"
+}
